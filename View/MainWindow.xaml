@@ -1,0 +1,33 @@
+﻿<Window x:Class="LegoBricks.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LegoBricks"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <TabControl>
+        <TabItem Header="Brick Categories">
+            <DockPanel>
+                <DockPanel DockPanel.Dock="Bottom">
+                    <Button Content="Add" DockPanel.Dock="Left" Width="100" Click="AddBrickCategory_Click" />
+                    <Button Content="Edit" DockPanel.Dock="Left" Width="100" Click="EditBrickCategory_Click" IsEnabled="{Binding IsItemSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Button Content="Delete" DockPanel.Dock="Left" Width="100" Click="DeleteBrickCategory_Click" IsEnabled="{Binding IsItemSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Button Content="Reset" DockPanel.Dock="Right" Width="100" Click="ResetBrickCategories_Click" IsEnabled="{Binding IsDataDirty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Button Content="Save" DockPanel.Dock="Right" Width="100" Click="SaveBrickCategories_Click" IsEnabled="{Binding IsDataDirty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Grid/>
+                </DockPanel>
+                <DataGrid x:Name="MainGrid" 
+                  ItemsSource="{Binding BrickCategories}" 
+                  SelectedItem="{Binding SelectedItem}"
+                  DockPanel.Dock="Top"
+                  AutoGenerateColumns="False" DataContextChanged="OnMainGridDataContextChanged" >
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="BrickCategory ID" Width="150" Binding="{Binding Id}" IsReadOnly="false" />
+                        <DataGridTextColumn Header="Name" Width="*" Binding="{Binding Name}" IsReadOnly="false" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
+        </TabItem>
+    </TabControl>
+</Window>
