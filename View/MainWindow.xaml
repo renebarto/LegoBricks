@@ -4,30 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LegoBricks"
+        xmlns:v="clr-namespace:LegoBricks.View"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <TabControl>
-        <TabItem Header="Brick Categories">
-            <DockPanel>
-                <DockPanel DockPanel.Dock="Bottom">
-                    <Button Content="Add" DockPanel.Dock="Left" Width="100" Click="AddBrickCategory_Click" />
-                    <Button Content="Edit" DockPanel.Dock="Left" Width="100" Click="EditBrickCategory_Click" IsEnabled="{Binding IsItemSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <Button Content="Delete" DockPanel.Dock="Left" Width="100" Click="DeleteBrickCategory_Click" IsEnabled="{Binding IsItemSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <Button Content="Reset" DockPanel.Dock="Right" Width="100" Click="ResetBrickCategories_Click" IsEnabled="{Binding IsDataDirty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <Button Content="Save" DockPanel.Dock="Right" Width="100" Click="SaveBrickCategories_Click" IsEnabled="{Binding IsDataDirty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <Grid/>
-                </DockPanel>
-                <DataGrid x:Name="MainGrid" 
-                  ItemsSource="{Binding BrickCategories}" 
-                  SelectedItem="{Binding SelectedItem}"
-                  DockPanel.Dock="Top"
-                  AutoGenerateColumns="False" DataContextChanged="OnMainGridDataContextChanged" >
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="BrickCategory ID" Width="150" Binding="{Binding Id}" IsReadOnly="false" />
-                        <DataGridTextColumn Header="Name" Width="*" Binding="{Binding Name}" IsReadOnly="false" />
-                    </DataGrid.Columns>
-                </DataGrid>
-            </DockPanel>
-        </TabItem>
+    <TabControl DataContextChanged="TabControlDataContextChanged">
+        <v:ColorsPage x:Name="ColorsPage" Header="Colors" GotFocus="ColorsPage_GotFocus" LostFocus="ColorsPage_LostFocus"></v:ColorsPage>
+        <v:ElementsPage x:Name="ElementsPage" Header="Elements" GotFocus="ElementsPage_GotFocus" LostFocus="ElementsPage_LostFocus"></v:ElementsPage>
+        <v:PartsPage x:Name="PartsPage" Header="Parts" GotFocus="PartsPage_GotFocus" LostFocus="PartsPage_LostFocus"></v:PartsPage>
+        <v:SetsPage x:Name="SetsPage" Header="Sets" GotFocus="SetsPage_GotFocus" LostFocus="SetsPage_LostFocus"></v:SetsPage>
+        <v:ThemesPage x:Name="ThemesPage" Header="Themes" GotFocus="ThemesPage_GotFocus" LostFocus="ThemesPage_LostFocus"></v:ThemesPage>
+        <v:BrickTypesPage x:Name="BrickTypesPage" Header="Brick Types" GotFocus="BrickTypesPage_GotFocus" LostFocus="BrickTypesPage_LostFocus"></v:BrickTypesPage>
+        <v:BrickCategoriesPage x:Name="BrickCategoriesPage" Header="Brick Categories" GotFocus="BrickCategoriesPage_GotFocus" LostFocus="BrickCategoriesPage_LostFocus"></v:BrickCategoriesPage>
     </TabControl>
 </Window>

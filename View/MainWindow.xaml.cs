@@ -28,64 +28,100 @@ namespace LegoBricks.View
             InitializeComponent();
         }
 
-        private void OnMainGridDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void TabControlDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             m_viewModel = (ViewModel.MainViewModel)this.DataContext;
-        }
-
-        private void AddBrickCategory_Click(object sender, RoutedEventArgs e)
-        {
-            var dialog = new BrickCategoryEditForm();
-            dialog.Title = "Add Brick Category";
-            BrickCategoryEditViewModel viewModel = new BrickCategoryEditViewModel(m_viewModel?.Model, true);
-            dialog.DataContext = viewModel;
-            if (m_viewModel?.SelectedItem != null)
+            if (m_viewModel != null)
             {
-                BrickCategoryData data = m_viewModel.SelectedItem.Value;
-                dialog.Data = data;
-            }
-            var result = dialog.ShowDialog();
-            if (result.HasValue && result.Value)
-            {
-                m_viewModel?.AddBrickCategory(dialog.Data);
-            }
-        }
-
-        private void EditBrickCategory_Click(object sender, RoutedEventArgs e)
-        {
-            var originalData = new BrickCategoryData();
-            var dialog = new BrickCategoryEditForm();
-            dialog.Title = "Edit Brick Category";
-            BrickCategoryEditViewModel viewModel = new BrickCategoryEditViewModel(m_viewModel?.Model, false);
-            dialog.DataContext = viewModel;
-            if (m_viewModel?.SelectedItem != null)
-            {
-                originalData = m_viewModel.SelectedItem.Value;
-            }
-            dialog.Data = originalData;
-            var result = dialog.ShowDialog();
-            if (result.HasValue && result.Value)
-            {
-                m_viewModel?.ChangeBrickCategory(dialog.Data, originalData);
+                var colorsViewModel = new ColorsViewModel(m_viewModel.Model);
+                ColorsPage.DataContext = colorsViewModel;
+                var elementsViewModel = new ElementsViewModel(m_viewModel.Model);
+                ElementsPage.DataContext = elementsViewModel;
+                var partsViewModel = new PartsViewModel(m_viewModel.Model);
+                PartsPage.DataContext = partsViewModel;
+                var setsViewModel = new SetsViewModel(m_viewModel.Model);
+                SetsPage.DataContext = setsViewModel;
+                var themesViewModel = new ThemesViewModel(m_viewModel.Model);
+                ThemesPage.DataContext = themesViewModel;
+                var brickTypesViewModel = new BrickTypesViewModel(m_viewModel.Model);
+                BrickTypesPage.DataContext = brickTypesViewModel;
+                var brickCategoriesViewModel = new BrickCategoriesViewModel(m_viewModel.Model);
+                BrickCategoriesPage.DataContext = brickCategoriesViewModel;
             }
         }
 
-        private void DeleteBrickCategory_Click(object sender, RoutedEventArgs e)
+        private void ViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (m_viewModel?.SelectedItem != null)
-            {
-                BrickCategoryData data = m_viewModel.SelectedItem.Value;
-                m_viewModel?.DeleteBrickCategory(data);
-            }
         }
 
-        private void ResetBrickCategories_Click(object sender, RoutedEventArgs e)
+        private void ColorsPage_GotFocus(object sender, RoutedEventArgs e)
         {
-            m_viewModel?.ResetBrickCategories();
+
         }
-        private void SaveBrickCategories_Click(object sender, RoutedEventArgs e)
+
+        private void ColorsPage_LostFocus(object sender, RoutedEventArgs e)
         {
-            m_viewModel?.SaveBrickCategories();
+
+        }
+
+        private void ElementsPage_GotFocus(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ElementsPage_LostFocus(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void PartsPage_GotFocus(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void PartsPage_LostFocus(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void SetsPage_GotFocus(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void SetsPage_LostFocus(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ThemesPage_GotFocus(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ThemesPage_LostFocus(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BrickTypesPage_GotFocus(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BrickTypesPage_LostFocus(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BrickCategoriesPage_GotFocus(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BrickCategoriesPage_LostFocus(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
