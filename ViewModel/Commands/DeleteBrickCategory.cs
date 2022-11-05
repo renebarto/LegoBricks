@@ -12,13 +12,13 @@ namespace LegoBricks.ViewModel.Commands
         #region Fields
 
         // Member variables
-        private readonly MainViewModel m_viewModel;
+        private readonly BrickCategoriesViewModel m_viewModel;
 
         #endregion
 
         #region Constructor
 
-        public DeleteBrickCategory(MainViewModel viewModel)
+        public DeleteBrickCategory(BrickCategoriesViewModel viewModel)
         {
             m_viewModel = viewModel;
         }
