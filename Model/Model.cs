@@ -1,12 +1,7 @@
-﻿using LegoBricks;
-using Microsoft.VisualBasic;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LegoBricks.Model
 {
@@ -21,16 +16,12 @@ namespace LegoBricks.Model
         {
             m_database = database;
             m_database.Open();
-            m_brickCategoriesDataTable = m_database.GetBrickCategories("BrickCategories");
-            m_brickCategories = new ObservableCollection<BrickCategoryData>();
-            if (m_brickCategoriesDataTable != null)
-            {
-                foreach (DataRow row in m_brickCategoriesDataTable.Rows)
-                {
-                    var data = Conversion.BrickCategoryConversion.ConvertRowToData(row);
-                    m_brickCategories.Add(data);
-                }
-            }
+            RefreshBrickCategories();
+        }
+
+        public void OnPropertyChanged(string? propertyName)
+        {
+
         }
 
         public ObservableCollection<BrickCategoryData>? BrickCategories
@@ -42,6 +33,21 @@ namespace LegoBricks.Model
             private set
             {
                 m_brickCategories = value;
+            }
+        }
+
+        public void RefreshBrickCategories()
+        {
+            m_database?.RefreshBrickCategories();
+            m_brickCategoriesDataTable = m_database?.GetBrickCategories("BrickCategories");
+            m_brickCategories = new ObservableCollection<BrickCategoryData>();
+            if (m_brickCategoriesDataTable != null)
+            {
+                foreach (DataRow row in m_brickCategoriesDataTable.Rows)
+                {
+                    var data = Conversion.BrickCategoryConversion.ConvertRowToData(row);
+                    m_brickCategories.Add(data);
+                }
             }
         }
 
@@ -59,9 +65,25 @@ namespace LegoBricks.Model
             return -1;
         }
 
-        public void UpdateBrickCategories(ObservableCollection<BrickCategoryData>? brickCategories)
+        public void SaveModifications(List<Modification<BrickCategoryData>>? modifications)
         {
-
+            if (modifications == null)
+                return;
+            foreach (Modification<BrickCategoryData> modification in modifications)
+            {
+                switch (modification.operation)
+                {
+                    case ModifyOperation.Add:
+                        m_database?.AddToTable(modification.data);
+                        break;
+                    case ModifyOperation.Delete:
+                        m_database?.DeleteFromTable(modification.data);
+                        break;
+                    case ModifyOperation.Update:
+                        m_database?.UpdateTable(modification.data, modification.originalData.id);
+                        break;
+                }
+            }
         }
 
         protected virtual void Dispose(bool disposing)
