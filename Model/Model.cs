@@ -8,6 +8,8 @@ namespace LegoBricks.Model
     public class Model : IDisposable
     {
         private Database? m_database;
+        private DataTable? m_brickTypesDataTable;
+        private ObservableCollection<BrickTypeData>? m_brickTypes;
         private DataTable? m_brickCategoriesDataTable;
         private ObservableCollection<BrickCategoryData>? m_brickCategories;
         private bool disposedValue;
@@ -16,6 +18,7 @@ namespace LegoBricks.Model
         {
             m_database = database;
             m_database.Open();
+            RefreshBrickTypes();
             RefreshBrickCategories();
         }
 
@@ -23,6 +26,74 @@ namespace LegoBricks.Model
         {
 
         }
+
+        #region Brick types
+
+        public ObservableCollection<BrickTypeData>? BrickTypes
+        {
+            get
+            {
+                return m_brickTypes;
+            }
+            private set
+            {
+                m_brickTypes = value;
+            }
+        }
+
+        public void RefreshBrickTypes()
+        {
+            m_database?.RefreshBrickTypes();
+            m_brickTypesDataTable = m_database?.GetBrickTypes("BrickTypes");
+            m_brickTypes = new ObservableCollection<BrickTypeData>();
+            if (m_brickTypesDataTable != null)
+            {
+                foreach (DataRow row in m_brickTypesDataTable.Rows)
+                {
+                    var data = Conversion.BrickTypeConversion.ConvertRowToData(row);
+                    m_brickTypes.Add(data);
+                }
+            }
+        }
+
+        public int FindBrickType(int id)
+        {
+            int index = 0;
+            if (BrickTypes == null)
+                return -1;
+            foreach (BrickTypeData data in BrickTypes)
+            {
+                if (data.id == id)
+                    return index;
+                ++index;
+            }
+            return -1;
+        }
+
+        public void SaveModifications(List<Modification<BrickTypeData>>? modifications)
+        {
+            if (modifications == null)
+                return;
+            foreach (Modification<BrickTypeData> modification in modifications)
+            {
+                switch (modification.operation)
+                {
+                    case ModifyOperation.Add:
+                        m_database?.AddToTable(modification.data);
+                        break;
+                    case ModifyOperation.Delete:
+                        m_database?.DeleteFromTable(modification.data);
+                        break;
+                    case ModifyOperation.Update:
+                        m_database?.UpdateTable(modification.data, modification.originalData.id);
+                        break;
+                }
+            }
+        }
+
+        #endregion
+
+        #region Brick categories
 
         public ObservableCollection<BrickCategoryData>? BrickCategories
         {
@@ -85,6 +156,8 @@ namespace LegoBricks.Model
                 }
             }
         }
+
+        #endregion
 
         protected virtual void Dispose(bool disposing)
         {

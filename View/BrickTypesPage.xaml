@@ -8,13 +8,22 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <DockPanel>
         <DockPanel DockPanel.Dock="Bottom">
-            <Button Content="Add" DockPanel.Dock="Left" Width="100" Click="AddBrickCategory_Click" />
-            <Button Content="Edit" DockPanel.Dock="Left" Width="100" Click="EditBrickCategory_Click" IsEnabled="{Binding IsItemSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            <Button Content="Delete" DockPanel.Dock="Left" Width="100" Click="DeleteBrickCategory_Click" IsEnabled="{Binding IsItemSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            <Button Content="Reset" DockPanel.Dock="Right" Width="100" Click="ResetBrickCategories_Click" IsEnabled="{Binding IsDataDirty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            <Button Content="Save" DockPanel.Dock="Right" Width="100" Click="SaveBrickCategories_Click" IsEnabled="{Binding IsDataDirty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <Button Content="Add" DockPanel.Dock="Left" Width="100" Click="AddBrickType_Click" />
+            <Button Content="Edit" DockPanel.Dock="Left" Width="100" Click="EditBrickType_Click" IsEnabled="{Binding IsItemSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <Button Content="Delete" DockPanel.Dock="Left" Width="100" Click="DeleteBrickType_Click" IsEnabled="{Binding IsItemSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <Button Content="Reset" DockPanel.Dock="Right" Width="100" Click="ResetBrickTypes_Click" IsEnabled="{Binding IsDataDirty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <Button Content="Save" DockPanel.Dock="Right" Width="100" Click="SaveBrickTypes_Click" IsEnabled="{Binding IsDataDirty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             <Grid/>
         </DockPanel>
-        <Grid Background="Magenta"/>
+        <DataGrid x:Name="BrickTypesGrid" 
+                  ItemsSource="{Binding BrickTypes}" 
+                  SelectedItem="{Binding SelectedItem}"
+                  DockPanel.Dock="Top"
+                  AutoGenerateColumns="False" DataContextChanged="OnBrickTypesGridDataContextChanged" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="BrickType ID" Width="150" Binding="{Binding Id}" IsReadOnly="false" />
+                <DataGridTextColumn Header="Name" Width="*" Binding="{Binding Name}" IsReadOnly="false" />
+            </DataGrid.Columns>
+        </DataGrid>
     </DockPanel>
 </TabItem>

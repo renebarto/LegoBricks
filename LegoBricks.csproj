@@ -13,10 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Model\Conversion\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Update="View\BrickCategoriesPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -41,6 +37,9 @@
     <Page Update="View\BrickCategoriesPage.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\BrickTypeEditForm.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
     <Page Update="View\ThemesPage.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
