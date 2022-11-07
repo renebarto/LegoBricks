@@ -1,0 +1,29 @@
+﻿<TabItem x:Class="LegoBricks.View.BrickTypesPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:LegoBricks.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <DockPanel>
+        <DockPanel DockPanel.Dock="Bottom">
+            <Button Content="Add" DockPanel.Dock="Left" Width="100" Click="AddBrickType_Click" />
+            <Button Content="Edit" DockPanel.Dock="Left" Width="100" Click="EditBrickType_Click" IsEnabled="{Binding IsItemSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <Button Content="Delete" DockPanel.Dock="Left" Width="100" Click="DeleteBrickType_Click" IsEnabled="{Binding IsItemSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <Button Content="Reset" DockPanel.Dock="Right" Width="100" Click="ResetBrickTypes_Click" IsEnabled="{Binding IsDataDirty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <Button Content="Save" DockPanel.Dock="Right" Width="100" Click="SaveBrickTypes_Click" IsEnabled="{Binding IsDataDirty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <Grid/>
+        </DockPanel>
+        <DataGrid x:Name="BrickTypesGrid" 
+                  ItemsSource="{Binding BrickTypes}" 
+                  SelectedItem="{Binding SelectedItem}"
+                  DockPanel.Dock="Top"
+                  AutoGenerateColumns="False" DataContextChanged="OnBrickTypesGridDataContextChanged" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="BrickType ID" Width="150" Binding="{Binding Id}" IsReadOnly="true" />
+                <DataGridTextColumn Header="Name" Width="*" Binding="{Binding Name}" IsReadOnly="true" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
+</TabItem>

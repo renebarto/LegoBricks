@@ -14,7 +14,7 @@ namespace LegoBricks.Model.Conversion
             var data = new BrickCategoryData();
             data.id = row.Field<Int32>(0);
             String? name = row.Field<String>(1);
-            data.name = (name != null) ? name : "";
+            data.name = name ?? "";
             return data;
         }
 

@@ -13,51 +13,62 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="View\BrickCategoriesPage.xaml.cs">
+    <Compile Update="View\BrickCategories\BrickCategoriesPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\ThemesPage.xaml.cs">
+    <Compile Update="View\Themes\ThemesPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\SetsPage.xaml.cs">
+    <Compile Update="View\Sets\SetsPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\PartsPage.xaml.cs">
+    <Compile Update="View\Parts\PartsPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\ElementsPage.xaml.cs">
+    <Compile Update="View\Elements\ElementsPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\ColorsPage.xaml.cs">
+    <Compile Update="View\Colors\ColorsPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="View\BrickCategoriesPage.xaml">
+    <Page Update="View\BrickCategories\BrickCategoriesPage.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\BrickTypeEditForm.xaml">
+    <Page Update="View\BrickTypes\BrickTypeEditForm.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
-    <Page Update="View\ThemesPage.xaml">
+    <Page Update="View\Colors\ColorEditForm.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\SetsPage.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="View\PartsPage.xaml">
+    <Page Update="View\Sets\SetEditForm.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\ElementsPage.xaml">
+    <Page Update="View\Themes\ThemeEditForm.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\ColorsPage.xaml">
+    <Page Update="View\Themes\ThemesPage.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\Sets\SetsPage.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\Parts\PartsPage.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\Elements\ElementsPage.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\Colors\ColorsPage.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>

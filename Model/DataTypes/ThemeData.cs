@@ -6,15 +6,17 @@ using System.Threading.Tasks;
 
 namespace LegoBricks
 {
-    public struct BrickCategoryData
+    public struct ThemeData
     {
         public Int32 id;
         public String name;
+        public Int32? parentID;
 
-        public BrickCategoryData(Int32 id, String name)
+        public ThemeData(Int32 id, String name, Int32? parentID)
         {
             this.id = id;
             this.name = name;
+            this.parentID = parentID;
         }
 
         public Int32 Id
@@ -27,8 +29,13 @@ namespace LegoBricks
             get { return name; }
             set { name = value; }
         }
+        public Int32? ParentID
+        {
+            get { return parentID; }
+            set { parentID = value; }
+        }
 
-        public bool Equals(BrickCategoryData other)
+        public bool Equals(ThemeData other)
         {
             return Equals(other, this);
         }
@@ -40,16 +47,17 @@ namespace LegoBricks
                 return false;
             }
 
-            var objectToCompareWith = (BrickCategoryData)obj;
+            var objectToCompareWith = (ThemeData)obj;
 
             return
                 objectToCompareWith.id == id &&
-                objectToCompareWith.name == name;
+                objectToCompareWith.name == name &&
+                objectToCompareWith.parentID == parentID;
         }
 
         public override int GetHashCode()
         {
-            var calculation = id + name.GetHashCode();
+            var calculation = id + name.GetHashCode() + parentID;
             return calculation.GetHashCode();
         }
     };

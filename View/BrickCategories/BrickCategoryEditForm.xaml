@@ -1,0 +1,90 @@
+﻿<Window x:Class="LegoBricks.View.BrickCategoryEditForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LegoBricks"
+        xmlns:vm="clr-namespace:LegoBricks.ViewModel"
+        mc:Ignorable="d"
+        Title="Edit Brick Category" Height="250" Width="400">
+    <Window.Resources>
+        <vm:ModelBindingProxy x:Key="ModelProxy" Model="{Binding}"/>
+        <vm:CheckExistingBindingProxy x:Key="CheckExistingProxy" CheckExisting="{Binding}"/>
+        <ControlTemplate x:Key="ValidationTemplate">
+            <DockPanel>
+                <TextBlock Foreground="Red" FontSize="20">!</TextBlock>
+                <AdornedElementPlaceholder/>
+            </DockPanel>
+        </ControlTemplate>
+
+        <Style x:Key="TextBoxInError" TargetType="{x:Type TextBox}">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="true">
+                    <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self},
+                        Path=(Validation.Errors)/ErrorContent}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <DockPanel>
+        <DockPanel DockPanel.Dock="Bottom">
+            <Button DockPanel.Dock="Right" Content="OK" Width="100" Height="30" Click="OnClickOK" IsDefault="True">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="IsEnabled" Value="False"/>
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=BrickCategoryID}" Value="False"/>
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=BrickCategoryName}" Value="False"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="IsEnabled" Value="True"/>
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button DockPanel.Dock="Right" Content="Cancel" Width="100" Height="30" IsCancel="True" />
+            <Grid/>
+        </DockPanel>
+        
+        <StackPanel DockPanel.Dock ="Top" Orientation="Horizontal">
+            <Label Content="ID" Width="100" />
+            <TextBox Name="BrickCategoryID" Width="200" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" Style="{StaticResource TextBoxInError}" GotFocus="TextBox_GotFocus">
+                <TextBox.Text>
+                    <Binding Path="BrickCategoryID" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <vm:BrickCategoryIDRule ValidatesOnTargetUpdated="True">
+                                <vm:BrickCategoryIDRule.ModelWrapper>
+                                    <vm:ModelBindingWrapper Model="{Binding Model.Model, Source={StaticResource ModelProxy}}" />
+                                </vm:BrickCategoryIDRule.ModelWrapper>
+                                <vm:BrickCategoryIDRule.CheckExistingWrapper>
+                                    <vm:CheckExistingBindingWrapper CheckExisting="{Binding CheckExisting.CheckExisting, Source={StaticResource CheckExistingProxy}}" />
+                                </vm:BrickCategoryIDRule.CheckExistingWrapper>
+                            </vm:BrickCategoryIDRule>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+        </StackPanel>
+
+        <StackPanel DockPanel.Dock ="Top" Orientation="Horizontal">
+            <Label Content="Name" Width="100" />
+            <TextBox Name="BrickCategoryName" Width="200" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" Style="{StaticResource TextBoxInError}" GotFocus="TextBox_GotFocus">
+                <TextBox.Text>
+                    <Binding Path="BrickCategoryName" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <vm:BrickCategoryNameRule ValidatesOnTargetUpdated="True">
+                                <vm:BrickCategoryNameRule.ModelWrapper>
+                                    <vm:ModelBindingWrapper Model="{Binding Model.Model, Source={StaticResource ModelProxy}}" />
+                                </vm:BrickCategoryNameRule.ModelWrapper>
+                            </vm:BrickCategoryNameRule>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+        </StackPanel>
+
+        <Grid/>
+    </DockPanel>
+</Window>

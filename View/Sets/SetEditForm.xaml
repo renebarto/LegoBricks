@@ -1,0 +1,158 @@
+﻿<Window x:Class="LegoBricks.View.SetEditForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LegoBricks"
+        xmlns:vm="clr-namespace:LegoBricks.ViewModel"
+        mc:Ignorable="d"
+        Title="Edit Set" Height="250" Width="400"
+        DataContextChanged="OnDataContextChanged">
+    <Window.Resources>
+        <vm:ModelBindingProxy x:Key="ModelProxy" Model="{Binding}"/>
+        <vm:CheckExistingBindingProxy x:Key="CheckExistingProxy" CheckExisting="{Binding}"/>
+        <ControlTemplate x:Key="ValidationTemplate">
+            <DockPanel>
+                <TextBlock Foreground="Red" FontSize="20">!</TextBlock>
+                <AdornedElementPlaceholder/>
+            </DockPanel>
+        </ControlTemplate>
+
+        <Style x:Key="TextBoxInError" TargetType="{x:Type TextBox}">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="true">
+                    <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self},
+                        Path=(Validation.Errors)/ErrorContent}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="ComboBoxInError" TargetType="{x:Type ComboBox}">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="true">
+                    <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self},
+                        Path=(Validation.Errors)/ErrorContent}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <DockPanel>
+        <DockPanel DockPanel.Dock="Bottom">
+            <Button DockPanel.Dock="Right" Content="OK" Width="100" Height="30" Click="OnClickOK" IsDefault="True">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="IsEnabled" Value="False"/>
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=SetID}" Value="False"/>
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=SetName}" Value="False"/>
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=SetPartCount}" Value="False"/>
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=SetThemeID}" Value="False"/>
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=SetYear}" Value="False"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="IsEnabled" Value="True"/>
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button DockPanel.Dock="Right" Content="Cancel" Width="100" Height="30" IsCancel="True" />
+            <Grid/>
+        </DockPanel>
+        
+        <StackPanel DockPanel.Dock ="Top" Orientation="Horizontal">
+            <Label Content="ID" Width="100" />
+            <TextBox Name="SetID" Width="200" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" Style="{StaticResource TextBoxInError}" GotFocus="TextBox_GotFocus">
+                <TextBox.Text>
+                    <Binding Path="SetID" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <vm:SetIDRule ValidatesOnTargetUpdated="True">
+                                <vm:SetIDRule.ModelWrapper>
+                                    <vm:ModelBindingWrapper Model="{Binding Model.Model, Source={StaticResource ModelProxy}}" />
+                                </vm:SetIDRule.ModelWrapper>
+                                <vm:SetIDRule.CheckExistingWrapper>
+                                    <vm:CheckExistingBindingWrapper CheckExisting="{Binding CheckExisting.CheckExisting, Source={StaticResource CheckExistingProxy}}" />
+                                </vm:SetIDRule.CheckExistingWrapper>
+                            </vm:SetIDRule>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+        </StackPanel>
+
+        <StackPanel DockPanel.Dock ="Top" Orientation="Horizontal">
+            <Label Content="Name" Width="100" />
+            <TextBox Name="SetName" Width="200" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" Style="{StaticResource TextBoxInError}" GotFocus="TextBox_GotFocus">
+                <TextBox.Text>
+                    <Binding Path="SetName" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <vm:SetNameRule ValidatesOnTargetUpdated="True">
+                                <vm:SetNameRule.ModelWrapper>
+                                    <vm:ModelBindingWrapper Model="{Binding Model.Model, Source={StaticResource ModelProxy}}" />
+                                </vm:SetNameRule.ModelWrapper>
+                            </vm:SetNameRule>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+        </StackPanel>
+
+        <StackPanel DockPanel.Dock ="Top" Orientation="Horizontal">
+            <Label Content="#Parts" Width="100" />
+            <TextBox Name="SetPartCount" Width="200" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" Style="{StaticResource TextBoxInError}" GotFocus="TextBox_GotFocus">
+                <TextBox.Text>
+                    <Binding Path="SetPartCount" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <vm:SetPartCountRule ValidatesOnTargetUpdated="True">
+                                <vm:SetPartCountRule.ModelWrapper>
+                                    <vm:ModelBindingWrapper Model="{Binding Model.Model, Source={StaticResource ModelProxy}}" />
+                                </vm:SetPartCountRule.ModelWrapper>
+                            </vm:SetPartCountRule>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+        </StackPanel>
+
+        <StackPanel DockPanel.Dock ="Top" Orientation="Horizontal">
+            <Label Content="Theme" Width="100" />
+            <ComboBox Name="SetThemeID" Width="200" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" Style="{StaticResource ComboBoxInError}" 
+                      IsEditable="True" 
+                      IsSynchronizedWithCurrentItem="True" IsTextSearchEnabled="True" IsTextSearchCaseSensitive="False">
+                <ComboBox.ItemsSource>
+                    <Binding Path="ThemesSource" UpdateSourceTrigger="PropertyChanged"/>
+                </ComboBox.ItemsSource>
+                <ComboBox.Text>
+                    <Binding Path="SetThemeID"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <vm:SetThemeIDRule ValidatesOnTargetUpdated="True">
+                                <vm:SetThemeIDRule.ModelWrapper>
+                                    <vm:ModelBindingWrapper Model="{Binding Model.Model, Source={StaticResource ModelProxy}}" />
+                                </vm:SetThemeIDRule.ModelWrapper>
+                            </vm:SetThemeIDRule>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </ComboBox.Text>
+            </ComboBox>
+        </StackPanel>
+
+        <StackPanel DockPanel.Dock ="Top" Orientation="Horizontal">
+            <Label Content="Year" Width="100" />
+            <TextBox Name="SetYear" Width="200" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" Style="{StaticResource TextBoxInError}" GotFocus="TextBox_GotFocus">
+                <TextBox.Text>
+                    <Binding Path="SetYear" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <vm:SetYearRule ValidatesOnTargetUpdated="True">
+                                <vm:SetYearRule.ModelWrapper>
+                                    <vm:ModelBindingWrapper Model="{Binding Model.Model, Source={StaticResource ModelProxy}}" />
+                                </vm:SetYearRule.ModelWrapper>
+                            </vm:SetYearRule>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+        </StackPanel>
+
+        <Grid/>
+    </DockPanel>
+</Window>

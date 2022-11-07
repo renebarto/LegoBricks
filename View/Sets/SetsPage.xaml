@@ -1,0 +1,40 @@
+﻿<TabItem x:Class="LegoBricks.View.SetsPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:LegoBricks.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <DockPanel>
+        <DockPanel DockPanel.Dock="Bottom">
+            <Button Content="Add" DockPanel.Dock="Left" Width="100" Click="OnClickAdd" />
+            <Button Content="Edit" DockPanel.Dock="Left" Width="100" Click="OnClickEdit" IsEnabled="{Binding IsItemSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <Button Content="Delete" DockPanel.Dock="Left" Width="100" Click="OnClickDelete" IsEnabled="{Binding IsItemSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <Button Content="Reset" DockPanel.Dock="Right" Width="100" Click="OnClickReset" IsEnabled="{Binding IsDataDirty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <Button Content="Save" DockPanel.Dock="Right" Width="100" Click="OnClickSave" IsEnabled="{Binding IsDataDirty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <Grid/>
+        </DockPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <DataGrid x:Name="SetsGrid" 
+                      Grid.Column="0"
+                      ItemsSource="{Binding Sets}" 
+                      SelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      DockPanel.Dock="Top"
+                      AutoGenerateColumns="False" DataContextChanged="OnDataContextChanged" >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Set ID" Width="150" Binding="{Binding Id}" IsReadOnly="true" />
+                    <DataGridTextColumn Header="Name" Width="*" Binding="{Binding Name}" IsReadOnly="true" />
+                    <DataGridTextColumn Header="#Parts" Width="*" Binding="{Binding PartCount}" IsReadOnly="true" />
+                    <DataGridTextColumn Header="Theme" Width="*" Binding="{Binding ThemeDescription}" IsReadOnly="true" />
+                    <DataGridTextColumn Header="Year" Width="*" Binding="{Binding Year}" IsReadOnly="true" />
+                </DataGrid.Columns>
+            </DataGrid>
+            <Image Name="SetImage" Grid.Column="1" Source="{Binding SetImagePath}"/>
+        </Grid>
+    </DockPanel>
+</TabItem>

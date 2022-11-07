@@ -27,6 +27,7 @@ namespace LegoBricks
             get { return name; }
             set { name = value; }
         }
+
         public bool Equals(BrickTypeData other)
         {
             return Equals(other, this);
